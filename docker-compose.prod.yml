@@ -12,6 +12,11 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   web:
     image: ghcr.io/sierrabonita/dco-rails-api:latest
@@ -25,7 +30,8 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     restart: always
 
 volumes:
