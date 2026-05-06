@@ -28,7 +28,7 @@ jobs:
           tags: ghcr.io/${{ github.repository }}:latest
 
       - name: Deploy to VPS
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1.2.5
         env:
           MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
           MYSQL_USER: ${{ secrets.MYSQL_USER }}
