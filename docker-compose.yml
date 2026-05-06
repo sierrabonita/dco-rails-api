@@ -16,7 +16,6 @@ services:
       retries: 10
   web:
     build: .
-    # 起動直前に rm を実行するように書き換える
     command: >
       bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:

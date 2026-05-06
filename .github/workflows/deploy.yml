@@ -18,7 +18,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }} # これは自動で付与されるので登録不要です
+          password: ${{ secrets.GITHUB_TOKEN }} # GITHUB_TOKENは自動で付与されるので登録は不要
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
