@@ -51,5 +51,5 @@ test:
 production:
   <<: *default
   database: dco_rails_api_production
-  username: <%= ENV.fetch("DATABASE_USER", "") %>
-  password: <%= ENV.fetch("DATABASE_PASSWORD", "") %>
+  username: <%= ENV.fetch("MYSQL_USER", "") %>
+  password: <%= ENV.fetch("MYSQL_PASSWORD", "") %>
