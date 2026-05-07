@@ -14,6 +14,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+    volumes:
+      - db_data:/var/lib/mysql
   web:
     build: .
     command: >
@@ -21,10 +23,12 @@ services:
     volumes:
       - .:/rails
     ports:
-      - "3000:3000"
+      - "3001:3000"
     environment:
       RAILS_ENV: development
       DATABASE_PASSWORD: ${MYSQL_PASSWORD}
     depends_on:
       db:
         condition: service_healthy
+volumes:
+  db_data:
