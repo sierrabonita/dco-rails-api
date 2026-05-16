@@ -44,23 +44,24 @@ class PostsController < ApplicationController
   end
 
   private
-    def set_user
-      @user = User.find_by(id: params[:user_id])
-    end
 
-    def set_user_post
-      if @user
-        @post = @user.posts.find(params[:id])
-      else
-        @post = Post.find(params[:id])
-      end
-    end
+  def set_user
+    @user = User.find_by(id: params[:user_id])
+  end
 
-    def post_params
-      params.require(:post).permit(:title, :body)
+  def set_user_post
+    if @user
+      @post = @user.posts.find(params[:id])
+    else
+      @post = Post.find(params[:id])
     end
+  end
 
-    def record_not_found
-      render json: { error: "指定されたデータが見つかりません" }, status: :not_found
-    end
+  def post_params
+    params.require(:post).permit(:title, :body)
+  end
+
+  def record_not_found
+    render json: { error: "指定されたデータが見つかりません" }, status: :not_found
+  end
 end

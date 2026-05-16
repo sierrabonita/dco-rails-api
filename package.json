@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "format:check": "prettier --check \"app/**/*.rb\"",
+    "format:fix": "prettier --write \"app/**/*.rb\""
+  },
+  "devDependencies": {
+    "@prettier/plugin-ruby": "^4.0.4"
+  }
+}

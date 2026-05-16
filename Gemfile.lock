@@ -146,6 +146,7 @@ GEM
       racc
     pp (0.6.3)
       prettyprint
+    prettier_print (1.2.1)
     prettyprint (0.2.0)
     prism (1.9.0)
     psych (5.3.1)
@@ -198,6 +199,10 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.4.2)
+    rbs (4.0.2)
+      logger
+      prism (>= 1.6.0)
+      tsort
     rdoc (7.2.0)
       erb
       psych (>= 4.0.0)
@@ -233,9 +238,15 @@ GEM
       rubocop (>= 1.72)
       rubocop-performance (>= 1.24)
       rubocop-rails (>= 2.30)
+    ruby-lsp (0.26.9)
+      language_server-protocol (~> 3.17.0)
+      prism (>= 1.2, < 2.0)
+      rbs (>= 3, < 5)
     ruby-progressbar (1.13.0)
     securerandom (0.4.1)
     stringio (3.2.0)
+    syntax_tree (6.3.0)
+      prettier_print (>= 1.2.0)
     thor (1.5.0)
     timeout (0.6.1)
     tsort (0.2.0)
@@ -265,7 +276,10 @@ DEPENDENCIES
   puma (>= 5.0)
   rack-cors
   rails (~> 7.2.3, >= 7.2.3.1)
+  rubocop
   rubocop-rails-omakase
+  ruby-lsp
+  syntax_tree
   tzinfo-data
 
 BUNDLED WITH
