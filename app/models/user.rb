@@ -21,7 +21,13 @@ class User < ApplicationRecord
               case_sensitive: false
             }
 
-  validates :password, presence: true, length: { minimum: 8 }, allow_nil: true
+  validates :password,
+            presence: true,
+            length: {
+              minimum: 8
+            },
+            allow_nil: true,
+            if: -> { provider.blank? }
 
   private
 

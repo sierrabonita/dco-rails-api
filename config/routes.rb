@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  post "auth/login", to: "auth#login"
+
   resources :skills
   resources :users do
     resources :posts, only: [:index]
