@@ -35,8 +35,6 @@ skills = [
   }
 ]
 
-skills.each do |skill_param|
-  Skill.create!(skill_param)
-end
+skills.each { |skill_param| Skill.create!(skill_param) }
 
 puts "=== Skillsの初期化が完了しました ==="
