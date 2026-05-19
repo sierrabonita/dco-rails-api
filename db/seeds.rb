@@ -1,6 +1,6 @@
-puts "=== DB の初期化を開始します ==="
+puts "=== シードデータの投入を開始します ==="
 
-require_relative "seeds/skills"
-require_relative "seeds/users"
+# db/seeds/ フォルダ内の .rb ファイルを名前順に取得して実行する
+Dir[Rails.root.join("db", "seeds", "*.rb")].sort.each { |file| require file }
 
-puts "=== DB の初期化が完了しました ==="
+puts "=== シードデータの投入が完了しました ==="

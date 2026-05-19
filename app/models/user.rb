@@ -1,9 +1,8 @@
 class User < ApplicationRecord
   has_secure_password
-  has_many :posts, dependent: :destroy
+  has_many :user_skills, dependent: :destroy
+  has_many :skills, through: :user_skills
 
-  # Rails 7.1+ supports normalizing attributes with the `normalizes` method, but since we're using Rails 7.0, we can implement normalization with a callback instead.
-  # normalizes :email, with: ->(email) { email.downcase }
   before_save :downcase_email
 
   validates :name, presence: true, length: { maximum: 50 }
