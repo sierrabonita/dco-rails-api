@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :skills
   resources :users do
+    resources :skills, controller: "user_skills"
     resources :posts, only: [:index]
   end
 
