@@ -46,4 +46,8 @@ group :development, :test do
   gem "rubocop", require: false
 
   gem "syntax_tree", require: false
+
+  gem "rspec-rails"
+
+  gem "factory_bot_rails"
 end
