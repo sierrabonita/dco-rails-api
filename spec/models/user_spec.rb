@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe User, type: :model do
   describe "バリデーション" do
-    # FactoryBotの build を使うことで、DBに保存せずにメモリ上だけでインスタンスを作成します（テストが高速になります）
     let(:user) { build(:user) }
 
     it "有効なファクトリを持つこと" do
