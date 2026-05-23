@@ -28,5 +28,8 @@ module Myapp
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # テスト環境等で ActionDispatch::HostAuthorization による 403 エラーを防ぐ
+    config.hosts << "www.example.com"
   end
 end
