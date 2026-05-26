@@ -38,3 +38,4 @@
 .ruby-lsp/
 /db/data/
 /node_modules
+/.claude/

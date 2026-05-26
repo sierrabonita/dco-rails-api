@@ -1,0 +1,15 @@
+{
+  "name": "Existing Docker Compose (Extend)",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "web",
+  "workspaceFolder": "/rails",
+  "shutdownAction": "none",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-rubyweb.vscode-rubocop",
+        "shopify.ruby-lsp"
+      ]
+    }
+  }
+}
