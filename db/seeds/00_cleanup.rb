@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 puts "--- 00_cleanup.rb を実行します（データの初期化） ---"
 
 # 中間テーブルの削除

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 puts "--- 01_skills.rb を実行中 ---"
 
 Skill.destroy_all
@@ -14,7 +16,7 @@ skills_data = [
   { name: "Python", layer: "Backend" },
   { name: "AWS", layer: "Infrastructure" },
   { name: "Docker/Kubernetes", layer: "Infrastructure" },
-  { name: "Figma", layer: "Design" }
+  { name: "Figma", layer: "Design" },
 ]
 
 skills_data.each { |data| Skill.create!(data) }
