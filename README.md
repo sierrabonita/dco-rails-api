@@ -15,7 +15,7 @@ A simple Ruby on Rails API mode demo site.
 - **🔐 Authentication:** JWT / bcrypt
 - **🌐 CORS:** rack-cors
 - **🧪 Testing:** RSpec / factory_bot_rails
-- **🧹 Linting & Formatting:** RuboCop (Omakase)
+- **🧹 Linting & Formatting:** RuboCop (rubocop-shopify)
 - **🔍 Spell Checking:** Code Spell Checker (VS Code Extension with `cspell.json`)
 - **🔍 Security Analysis:** Brakeman
 - **🛠️ Development Support:** ruby-lsp / debug / syntax_tree
