@@ -1,6 +1,8 @@
-# Omakase Ruby styling for Rails
 inherit_gem:
   rubocop-rails-omakase: rubocop.yml
 
-inherit_from:
-  - node_modules/@prettier/plugin-ruby/rubocop.yml
+Layout/IndentationWidth:
+  Enabled: true
+
+Layout/IndentationConsistency:
+  Enabled: true

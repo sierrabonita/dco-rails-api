@@ -1,5 +1,5 @@
 class AuthController < ApplicationController
-  skip_before_action :authenticate_request, only: [:login]
+  skip_before_action :authenticate_request, only: [ :login ]
 
   def login
     user = User.find_by(email: params[:email])
@@ -10,8 +10,8 @@ class AuthController < ApplicationController
                token: token,
                user: {
                  id: user.id,
-                 email: user.email,
-               },
+                 email: user.email
+               }
              },
              status: :ok
     else

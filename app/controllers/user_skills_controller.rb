@@ -52,32 +52,32 @@ class UserSkillsController < ApplicationController
 
   private
 
-  def set_user
-    @user = User.find(params[:user_id])
-  end
+    def set_user
+      @user = User.find(params[:user_id])
+    end
 
-  def set_user_skill
-    @user_skill = @user.user_skills.find_by!(skill_id: params[:id])
-  end
+    def set_user_skill
+      @user_skill = @user.user_skills.find_by!(skill_id: params[:id])
+    end
 
-  # フロントエンドの既存のペイロード構造を壊さないように require(:skill) のままにしています
-  def user_skill_params
-    params.require(:skill).permit(:name, :layer, :rating, :description)
-  end
+    # フロントエンドの既存のペイロード構造を壊さないように require(:skill) のままにしています
+    def user_skill_params
+      params.require(:skill).permit(:name, :layer, :rating, :description)
+    end
 
-  def format_user_skill(user_skill)
-    {
-      id: user_skill.skill_id,
-      name: user_skill.skill.name,
-      layer: user_skill.skill.layer,
-      rating: user_skill.rating,
-      description: user_skill.description,
-      created_at: user_skill.created_at,
-      updated_at: user_skill.updated_at
-    }
-  end
+    def format_user_skill(user_skill)
+      {
+        id: user_skill.skill_id,
+        name: user_skill.skill.name,
+        layer: user_skill.skill.layer,
+        rating: user_skill.rating,
+        description: user_skill.description,
+        created_at: user_skill.created_at,
+        updated_at: user_skill.updated_at
+      }
+    end
 
-  def record_not_found
-    render json: { error: "指定されたデータが見つかりません" }, status: :not_found
-  end
+    def record_not_found
+      render json: { error: "指定されたデータが見つかりません" }, status: :not_found
+    end
 end

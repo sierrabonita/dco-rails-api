@@ -30,7 +30,7 @@ class User < ApplicationRecord
 
   private
 
-  def downcase_email
-    self.email = email.downcase
-  end
+    def downcase_email
+      self.email = email.downcase
+    end
 end
