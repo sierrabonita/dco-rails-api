@@ -9,11 +9,22 @@ class ApplicationController < ActionController::API
   private
 
   def authenticate_request
+    # AuthorizationヘッダーからBearerトークンを取得
     header = request.headers["Authorization"]
+
+    # Bearerトークンは "Bearer <token>" の形式で送られるため、スペースで分割してトークン部分を取得
     token = header.split(" ").last if header
 
-    decoded = JsonWebToken.decode(token) if token
-    @current_user = User.find_by(id: decoded[:user_id]) if decoded
+    if token
+      begin
+        decoded = JsonWebToken.decode(token)
+        @current_user = User.find_by(id: decoded[:user_id])
+      rescue JWT::ExpiredSignature
+        return render(json: { error: "Token has expired" }, status: :unauthorized)
+      rescue JWT::DecodeError
+        return render(json: { error: "Invalid token" }, status: :unauthorized)
+      end
+    end
 
     unless @current_user
       render(json: { error: "Not Authorized" }, status: :unauthorized)

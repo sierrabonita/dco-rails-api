@@ -13,7 +13,5 @@ module JsonWebToken
   def self.decode(token)
     decoded = JWT.decode(token, SECRET_KEY)[0]
     HashWithIndifferentAccess.new(decoded)
-  rescue JWT::DecodeError
-    nil
   end
 end

@@ -29,14 +29,14 @@
     "letsencrypt",
     "libjemalloc",
     "libmysqlclient",
-    "mypass",
     "myapp",
-    "myuser",
+    "mypass",
     "mysqladmin",
+    "myuser",
+    "omakase",
     "pidfile",
     "pids",
     "privkey",
-    "omakase",
     "rakecors",
     "rescuable",
     "rubocop",
@@ -48,7 +48,9 @@
     "somedatabase",
     "succ",
     "unshift",
+    "urlsafe",
     "vite",
-    "zoneinfo"],
+    "zoneinfo"
+  ],
   "import": []
 }
