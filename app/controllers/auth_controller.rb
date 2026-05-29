@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AuthController < ApplicationController
-  skip_before_action :authenticate_request, only: [:login, :refresh]
+  skip_before_action :authenticate_request, only: [:login, :logout, :refresh]
 
   def login
     user = User.find_by(email: params[:email])
