@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_06_11_023255) do
+ActiveRecord::Schema[7.2].define(version: 2026_06_11_025049) do
   create_table "skills", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string("name")
     t.string("layer")
@@ -31,6 +31,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_11_023255) do
     t.index(["skill_id"], name: "index_user_skills_on_skill_id")
     t.index(["user_id", "skill_id"], name: "index_user_skills_on_user_id_and_skill_id", unique: true)
     t.index(["user_id"], name: "index_user_skills_on_user_id")
+    t.check_constraint("(`rating` >= 1) and (`rating` <= 5)", name: "check_user_skills_rating_range")
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
