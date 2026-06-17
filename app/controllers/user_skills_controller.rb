@@ -3,6 +3,7 @@
 class UserSkillsController < ApplicationController
   before_action :set_user
   before_action :set_user_skill, only: [:show, :update, :destroy]
+  before_action :authorize_user!, only: [:create, :update, :destroy]
 
   def index
     user_skills = @user.user_skills.includes(:skill)
@@ -64,5 +65,9 @@ class UserSkillsController < ApplicationController
       created_at: user_skill.created_at,
       updated_at: user_skill.updated_at,
     }
+  end
+
+  def authorize_user!
+    render(json: { error: "権限がありません" }, status: :forbidden) unless @current_user == @user
   end
 end

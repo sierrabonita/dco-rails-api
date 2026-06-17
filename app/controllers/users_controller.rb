@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  skip_before_action :authenticate_request, only: [:create]
   before_action :set_user, only: [:show, :update, :destroy]
+  before_action :authorize_user!, only: [:update, :destroy]
 
   def index
     @users = User.all
@@ -37,5 +39,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :password)
+  end
+
+  def authorize_user!
+    render(json: { error: "権限がありません" }, status: :forbidden) unless @current_user == @user
   end
 end
