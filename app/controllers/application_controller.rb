@@ -4,6 +4,9 @@ class ApplicationController < ActionController::API
   before_action :authenticate_request
   attr_reader :current_user
 
+  rescue_from ActiveRecord::RecordNotFound, with: :render_404
+  rescue_from ActiveRecord::RecordInvalid, with: :render_422
+  rescue_from ActionController::ParameterMissing, with: :render_400
   rescue_from StandardError, with: :render_500
 
   private
@@ -29,6 +32,18 @@ class ApplicationController < ActionController::API
     unless @current_user
       render(json: { error: "Not Authorized" }, status: :unauthorized)
     end
+  end
+
+  def render_400(exception)
+    render(json: { error: "必須パラメータが不足しています: #{exception.param}" }, status: :bad_request)
+  end
+
+  def render_404
+    render(json: { error: "指定されたデータが見つかりません" }, status: :not_found)
+  end
+
+  def render_422(exception)
+    render(json: { errors: exception.record.errors.full_messages }, status: :unprocessable_content)
   end
 
   def render_500(exception)

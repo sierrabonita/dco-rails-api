@@ -4,8 +4,6 @@ class UserSkillsController < ApplicationController
   before_action :set_user
   before_action :set_user_skill, only: [:show, :update, :destroy]
 
-  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-
   def index
     user_skills = @user.user_skills.includes(:skill)
     render(json: user_skills.map { |us| format_user_skill(us) })
@@ -20,31 +18,20 @@ class UserSkillsController < ApplicationController
     @skill = Skill.find_or_initialize_by(name: user_skill_params[:name])
     @skill.layer = user_skill_params[:layer] if @skill.new_record?
 
-    if @skill.save
-      # 中間テーブルのレコードを作成・更新
-      @user_skill = @user.user_skills.find_or_initialize_by(skill: @skill)
-      @user_skill.rating = user_skill_params[:rating]
-      @user_skill.description = user_skill_params[:description]
+    @skill.save!
 
-      if @user_skill.save
-        render(json: format_user_skill(@user_skill), status: :created)
-      else
-        render(json: @user_skill.errors, status: :unprocessable_content)
-      end
-    else
-      render(json: @skill.errors, status: :unprocessable_content)
-    end
+    # 中間テーブルのレコードを作成・更新
+    @user_skill = @user.user_skills.find_or_initialize_by(skill: @skill)
+    @user_skill.rating = user_skill_params[:rating]
+    @user_skill.description = user_skill_params[:description]
+
+    @user_skill.save!
+    render(json: format_user_skill(@user_skill), status: :created)
   end
 
   def update
-    if @user_skill.update(
-      rating: user_skill_params[:rating],
-      description: user_skill_params[:description],
-    )
-      render(json: format_user_skill(@user_skill))
-    else
-      render(json: @user_skill.errors, status: :unprocessable_content)
-    end
+    @user_skill.update!(rating: user_skill_params[:rating], description: user_skill_params[:description])
+    render(json: format_user_skill(@user_skill))
   end
 
   # DELETE /users/:user_id/skills/:id
@@ -77,9 +64,5 @@ class UserSkillsController < ApplicationController
       created_at: user_skill.created_at,
       updated_at: user_skill.updated_at,
     }
-  end
-
-  def record_not_found
-    render(json: { error: "指定されたデータが見つかりません" }, status: :not_found)
   end
 end
