@@ -74,6 +74,7 @@ GEM
       minitest (>= 5.1, < 6)
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
+    alba (3.10.0)
     ast (2.4.3)
     base64 (0.3.0)
     bcrypt (3.1.22)
@@ -148,6 +149,10 @@ GEM
       racc (~> 1.4)
     nokogiri (1.19.2-x86_64-linux-gnu)
       racc (~> 1.4)
+    oj (3.17.3)
+      bigdecimal (>= 3.0)
+      ostruct (>= 0.2)
+    ostruct (0.6.3)
     parallel (1.28.0)
     parser (3.3.11.1)
       ast (~> 2.4.1)
@@ -285,6 +290,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  alba
   bcrypt (~> 3.1.7)
   bootsnap
   brakeman
@@ -292,6 +298,7 @@ DEPENDENCIES
   factory_bot_rails
   jwt
   mysql2 (~> 0.5)
+  oj
   puma (>= 5.0)
   rack-cors
   rails (~> 7.2.3, >= 7.2.3.1)

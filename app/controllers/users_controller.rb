@@ -6,25 +6,25 @@ class UsersController < ApplicationController
   before_action :authorize_user!, only: [:update, :destroy]
 
   def index
-    @users = User.all
+    @users = User.includes(user_skills: :skill).all
 
-    render(json: @users, only: [:id, :name, :email, :created_at])
+    render(json: UserResource.new(@users).serialize)
   end
 
   def show
-    render(json: @user, only: [:id, :name, :email, :created_at])
+    render(json: UserResource.new(@user).serialize)
   end
 
   def create
     @user = User.new(user_params)
 
     @user.save!
-    render(json: @user, only: [:id, :name, :email], status: :created)
+    render(json: UserResource.new(@user).serialize, status: :created)
   end
 
   def update
     @user.update!(user_params)
-    render(json: @user, only: [:id, :name, :email])
+    render(json: UserResource.new(@user).serialize)
   end
 
   def destroy

@@ -7,12 +7,12 @@ class SkillsController < ApplicationController
   def index
     @skills = Skill.all
 
-    render(json: @skills)
+    render(json: SkillResource.new(@skills).serialize)
   end
 
   # GET /skills/1
   def show
-    render(json: @skill)
+    render(json: SkillResource.new(@skill).serialize)
   end
 
   # POST /skills
@@ -20,13 +20,13 @@ class SkillsController < ApplicationController
     @skill = Skill.new(skill_params)
 
     @skill.save!
-    render(json: @skill, status: :created, location: @skill)
+    render(json: SkillResource.new(@skill).serialize, status: :created, location: @skill)
   end
 
   # PATCH/PUT /skills/1
   def update
     @skill.update!(skill_params)
-    render(json: @skill)
+    render(json: SkillResource.new(@skill).serialize)
   end
 
   # DELETE /skills/1

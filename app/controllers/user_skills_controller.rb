@@ -7,11 +7,11 @@ class UserSkillsController < ApplicationController
 
   def index
     user_skills = @user.user_skills.includes(:skill)
-    render(json: user_skills.map { |us| format_user_skill(us) })
+    render(json: UserSkillResource.new(user_skills).serialize)
   end
 
   def show
-    render(json: format_user_skill(@user_skill))
+    render(json: UserSkillResource.new(@user_skill).serialize)
   end
 
   def create
@@ -27,12 +27,12 @@ class UserSkillsController < ApplicationController
     @user_skill.description = user_skill_params[:description]
 
     @user_skill.save!
-    render(json: format_user_skill(@user_skill), status: :created)
+    render(json: UserSkillResource.new(@user_skill).serialize, status: :created)
   end
 
   def update
     @user_skill.update!(rating: user_skill_params[:rating], description: user_skill_params[:description])
-    render(json: format_user_skill(@user_skill))
+    render(json: UserSkillResource.new(@user_skill).serialize)
   end
 
   # DELETE /users/:user_id/skills/:id
@@ -47,24 +47,13 @@ class UserSkillsController < ApplicationController
   end
 
   def set_user_skill
-    @user_skill = @user.user_skills.find_by!(skill_id: params[:id])
+    # ネストしたリソースを扱うため、skill_idではなくuser_skillsテーブルのidで検索する
+    @user_skill = @user.user_skills.find(params[:id])
   end
 
   # フロントエンドの既存のペイロード構造を壊さないように require(:skill) のままにしています
   def user_skill_params
     params.require(:skill).permit(:name, :layer, :rating, :description)
-  end
-
-  def format_user_skill(user_skill)
-    {
-      id: user_skill.skill_id,
-      name: user_skill.skill.name,
-      layer: user_skill.skill.layer,
-      rating: user_skill.rating,
-      description: user_skill.description,
-      created_at: user_skill.created_at,
-      updated_at: user_skill.updated_at,
-    }
   end
 
   def authorize_user!
