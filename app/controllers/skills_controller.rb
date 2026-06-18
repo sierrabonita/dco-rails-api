@@ -5,9 +5,12 @@ class SkillsController < ApplicationController
 
   # GET /skills
   def index
-    @skills = Skill.all
+    @pagy, @skills = pagy(Skill.all)
 
-    render(json: SkillResource.new(@skills).serialize)
+    render(json: {
+      data: SkillResource.new(@skills).serializable_hash,
+      meta: @pagy.data_hash,
+    })
   end
 
   # GET /skills/1

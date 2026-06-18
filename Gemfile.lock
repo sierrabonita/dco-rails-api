@@ -153,6 +153,10 @@ GEM
       bigdecimal (>= 3.0)
       ostruct (>= 0.2)
     ostruct (0.6.3)
+    pagy (43.4.4)
+      json
+      uri
+      yaml
     parallel (1.28.0)
     parser (3.3.11.1)
       ast (~> 2.4.1)
@@ -277,11 +281,13 @@ GEM
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.2.0)
+    uri (1.1.1)
     useragent (0.16.11)
     websocket-driver (0.8.0)
       base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    yaml (0.4.0)
     zeitwerk (2.7.5)
 
 PLATFORMS
@@ -299,6 +305,7 @@ DEPENDENCIES
   jwt
   mysql2 (~> 0.5)
   oj
+  pagy
   puma (>= 5.0)
   rack-cors
   rails (~> 7.2.3, >= 7.2.3.1)

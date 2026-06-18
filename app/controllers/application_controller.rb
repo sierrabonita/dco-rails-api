@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
+  include Pagy::Method
+
   before_action :authenticate_request
   attr_reader :current_user
 
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
   rescue_from ActiveRecord::RecordInvalid, with: :render_422
   rescue_from ActionController::ParameterMissing, with: :render_400
+  rescue_from Pagy::OptionError, with: :render_404
   rescue_from StandardError, with: :render_500
 
   private

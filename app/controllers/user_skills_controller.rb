@@ -6,8 +6,11 @@ class UserSkillsController < ApplicationController
   before_action :authorize_user!, only: [:create, :update, :destroy]
 
   def index
-    user_skills = @user.user_skills.includes(:skill)
-    render(json: UserSkillResource.new(user_skills).serialize)
+    @pagy, user_skills = pagy(@user.user_skills.includes(:skill))
+    render(json: {
+      data: UserSkillResource.new(user_skills).serializable_hash,
+      meta: @pagy.data_hash,
+    })
   end
 
   def show
