@@ -30,6 +30,18 @@ class User < ApplicationRecord
     allow_nil: true,
     if: -> { provider.blank? }
 
+  scope :by_skills, ->(skill_ids) {
+    joins(:user_skills).where(user_skills: { skill_id: skill_ids }).distinct
+  }
+
+  scope :min_rating, ->(rating) {
+    joins(:user_skills).where("user_skills.rating >= ?", rating).distinct
+  }
+
+  scope :search_by_name, ->(keyword) {
+    where("name LIKE ?", "%#{keyword}%")
+  }
+
   private
 
   def downcase_email

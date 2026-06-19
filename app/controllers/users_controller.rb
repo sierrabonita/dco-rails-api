@@ -6,7 +6,21 @@ class UsersController < ApplicationController
   before_action :authorize_user!, only: [:update, :destroy]
 
   def index
-    @pagy, @users = pagy(User.includes(user_skills: :skill).all)
+    users_query = User.includes(user_skills: :skill)
+
+    if params[:skill_ids].present?
+      users_query = users_query.by_skills(params[:skill_ids])
+    end
+
+    if params[:min_rating].present?
+      users_query = users_query.min_rating(params[:min_rating])
+    end
+
+    if params[:keyword].present?
+      users_query = users_query.search_by_name(params[:keyword])
+    end
+
+    @pagy, @users = pagy(users_query)
 
     render(json: {
       data: UserResource.new(@users).serializable_hash,
