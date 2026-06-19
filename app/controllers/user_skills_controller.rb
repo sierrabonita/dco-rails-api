@@ -6,7 +6,8 @@ class UserSkillsController < ApplicationController
   before_action :authorize_user!, only: [:create, :update, :destroy]
 
   def index
-    @pagy, user_skills = pagy(@user.user_skills.includes(:skill))
+    custom_limit = params[:limit] || 10
+    @pagy, user_skills = pagy(@user.user_skills.includes(:skill), limit: custom_limit)
     render(json: {
       data: UserSkillResource.new(user_skills).serializable_hash,
       meta: @pagy.data_hash,
