@@ -8,7 +8,7 @@ class AuthController < ApplicationController
 
     if user&.authenticate(params[:password])
       # アクセストークンは有効期限を短く設定（例：15分）
-      access_token = JsonWebToken.encode({ user_id: user.id, exp: 15.minutes.from_now.to_i })
+      access_token = JsonWebToken.encode({ user_id: user.id, role: user.role, exp: 15.minutes.from_now.to_i })
       refresh_token = SecureRandom.urlsafe_base64
 
       user.update(refresh_token: refresh_token)
@@ -20,6 +20,7 @@ class AuthController < ApplicationController
           user: {
             id: user.id,
             email: user.email,
+            role: user.role,
           },
         },
         status: :ok,
@@ -34,12 +35,23 @@ class AuthController < ApplicationController
     user = User.find_by(refresh_token: params[:refresh_token])
 
     if user
-      access_token = JsonWebToken.encode({ user_id: user.id, exp: 15.minutes.from_now.to_i })
+      access_token = JsonWebToken.encode({ user_id: user.id, role: user.role, exp: 15.minutes.from_now.to_i })
       new_refresh_token = SecureRandom.urlsafe_base64
 
       user.update(refresh_token: new_refresh_token)
 
-      render(json: { access_token: access_token, refresh_token: new_refresh_token }, status: :ok)
+      render(
+        json: {
+          access_token: access_token,
+          refresh_token: new_refresh_token,
+          user: {
+            id: user.id,
+            email: user.email,
+            role: user.role,
+          },
+        },
+        status: :ok,
+      )
     else
       render(json: { error: "無効なリフレッシュトークンです" }, status: :unauthorized)
     end

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,38 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_06_11_025049) do
+ActiveRecord::Schema[7.2].define(version: 2026_06_20_014221) do
   create_table "skills", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string("name")
-    t.string("layer")
-    t.datetime("created_at", null: false)
-    t.datetime("updated_at", null: false)
-    t.index(["name"], name: "index_skills_on_name", unique: true)
+    t.string "name"
+    t.string "layer"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_skills_on_name", unique: true
   end
 
   create_table "user_skills", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint("user_id", null: false)
-    t.bigint("skill_id", null: false)
-    t.integer("rating")
-    t.text("description")
-    t.datetime("created_at", null: false)
-    t.datetime("updated_at", null: false)
-    t.index(["skill_id"], name: "index_user_skills_on_skill_id")
-    t.index(["user_id", "skill_id"], name: "index_user_skills_on_user_id_and_skill_id", unique: true)
-    t.index(["user_id"], name: "index_user_skills_on_user_id")
-    t.check_constraint("(`rating` >= 1) and (`rating` <= 5)", name: "check_user_skills_rating_range")
+    t.bigint "user_id", null: false
+    t.bigint "skill_id", null: false
+    t.integer "rating"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["skill_id"], name: "index_user_skills_on_skill_id"
+    t.index ["user_id", "skill_id"], name: "index_user_skills_on_user_id_and_skill_id", unique: true
+    t.index ["user_id"], name: "index_user_skills_on_user_id"
+    t.check_constraint "(`rating` >= 1) and (`rating` <= 5)", name: "check_user_skills_rating_range"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string("name")
-    t.string("email")
-    t.string("password_digest")
-    t.datetime("created_at", null: false)
-    t.datetime("updated_at", null: false)
-    t.string("provider")
-    t.string("uid")
-    t.string("refresh_token")
-    t.index(["refresh_token"], name: "index_users_on_refresh_token")
+    t.string "name"
+    t.string "email"
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "provider"
+    t.string "uid"
+    t.string "refresh_token"
+    t.string "role", default: "normal", null: false
+    t.index ["refresh_token"], name: "index_users_on_refresh_token"
   end
 
   add_foreign_key "user_skills", "skills", on_delete: :cascade
