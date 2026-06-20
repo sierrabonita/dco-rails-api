@@ -1,5 +1,10 @@
-inherit_gem:
-  rubocop-shopify: rubocop.yml
-
 require:
+  - rubocop-rails
   - rubocop-performance
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - 'db/schema.rb'
+    - 'bin/**/*'
+    - 'vendor/**/*'
