@@ -2,6 +2,7 @@
 
 class SkillsController < ApplicationController
   before_action :set_skill, only: %i[show update destroy]
+  before_action :require_admin, only: %i[create update destroy]
 
   # GET /skills
   def index

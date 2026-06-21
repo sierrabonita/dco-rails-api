@@ -37,6 +37,12 @@ class ApplicationController < ActionController::API
     render(json: { error: 'Not Authorized' }, status: :unauthorized)
   end
 
+  def require_admin
+    unless @current_user&.admin?
+      render(json: { error: '管理者権限がありません', status: :forbidden })
+    end
+  end
+
   def render_400(exception)
     render(json: { error: "必須パラメータが不足しています: #{exception.param}" }, status: :bad_request)
   end
