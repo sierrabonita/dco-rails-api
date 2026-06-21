@@ -5,7 +5,7 @@ Rails.logger.debug '--- 03_user_skills.rb を実行中 ---'
 UserSkill.destroy_all
 
 user_skills_data_map = {
-  'test_1@test.com' => [
+  'normal_1@test.com' => [
     {
       name: 'React',
       rating: 4,
@@ -24,7 +24,7 @@ user_skills_data_map = {
       description: '認証・CRUD API・ActiveRecordを用いたAPI実装'
     }
   ],
-  'test_2@test.com' => [
+  'normal_2@test.com' => [
     { name: 'Vue.js', rating: 4, description: 'Composition APIによるコンポーネント設計' },
     { name: 'TypeScript', rating: 4, description: '型安全なフロントエンド開発' },
     { name: 'Go', rating: 3, description: 'バックエンドAPIの実装' },
