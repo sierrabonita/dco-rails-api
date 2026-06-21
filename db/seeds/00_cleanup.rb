@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-puts "--- 00_cleanup.rb を実行します（データの初期化） ---"
+Rails.logger.debug '--- 00_cleanup.rb を実行します（データの初期化） ---'
 
 # 中間テーブルの削除
 UserSkill.delete_all
@@ -11,4 +11,4 @@ Skill.delete_all
 # メインテーブルの削除
 User.delete_all
 
-puts "--- 00_cleanup.rb が完了しました ---"
+Rails.logger.debug '--- 00_cleanup.rb が完了しました ---'

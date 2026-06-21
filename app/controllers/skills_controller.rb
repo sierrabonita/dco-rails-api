@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 class SkillsController < ApplicationController
-  before_action :set_skill, only: [:show, :update, :destroy]
+  before_action :set_skill, only: %i[show update destroy]
 
   # GET /skills
   def index
     @pagy, @skills = pagy(Skill.all)
 
     render(json: {
-      data: SkillResource.new(@skills).serializable_hash,
-      meta: @pagy.data_hash,
-    })
+             data: SkillResource.new(@skills).serializable_hash,
+             meta: @pagy.data_hash
+           })
   end
 
   # GET /skills/1

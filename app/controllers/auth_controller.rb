@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AuthController < ApplicationController
-  skip_before_action :authenticate_request, only: [:login, :logout, :refresh]
+  skip_before_action :authenticate_request, only: %i[login logout refresh]
 
   def login
     user = User.find_by(email: params[:email])
@@ -20,13 +20,13 @@ class AuthController < ApplicationController
           user: {
             id: user.id,
             email: user.email,
-            role: user.role,
-          },
+            role: user.role
+          }
         },
-        status: :ok,
+        status: :ok
       )
     else
-      render(json: { error: "メールアドレスまたはパスワードが正しくありません" }, status: :unauthorized)
+      render(json: { error: 'メールアドレスまたはパスワードが正しくありません' }, status: :unauthorized)
     end
   end
 
@@ -47,13 +47,13 @@ class AuthController < ApplicationController
           user: {
             id: user.id,
             email: user.email,
-            role: user.role,
-          },
+            role: user.role
+          }
         },
-        status: :ok,
+        status: :ok
       )
     else
-      render(json: { error: "無効なリフレッシュトークンです" }, status: :unauthorized)
+      render(json: { error: '無効なリフレッシュトークンです' }, status: :unauthorized)
     end
   end
 
@@ -65,6 +65,6 @@ class AuthController < ApplicationController
       user = User.find_by(refresh_token: params[:refresh_token])
       user&.update(refresh_token: nil)
     end
-    render(json: { message: "ログアウトしました" }, status: :ok)
+    render(json: { message: 'ログアウトしました' }, status: :ok)
   end
 end

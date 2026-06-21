@@ -7,41 +7,41 @@ class User < ApplicationRecord
 
   before_save :downcase_email
 
-  enum :role, { normal: "normal", admin: "admin" }
+  enum :role, { normal: 'normal', admin: 'admin' }
 
   validates :name, presence: true, length: { maximum: 50 }
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email,
-    presence: true,
-    length: {
-      maximum: 255,
-    },
-    format: {
-      with: VALID_EMAIL_REGEX,
-    },
-    uniqueness: {
-      case_sensitive: false,
-    }
+            presence: true,
+            length: {
+              maximum: 255
+            },
+            format: {
+              with: VALID_EMAIL_REGEX
+            },
+            uniqueness: {
+              case_sensitive: false
+            }
 
   validates :password,
-    presence: true,
-    length: {
-      minimum: 8,
-    },
-    allow_nil: true,
-    if: -> { provider.blank? }
+            presence: true,
+            length: {
+              minimum: 8
+            },
+            allow_nil: true,
+            if: -> { provider.blank? }
 
-  scope :by_skills, ->(skill_ids) {
+  scope :by_skills, lambda { |skill_ids|
     joins(:user_skills).where(user_skills: { skill_id: skill_ids }).distinct
   }
 
-  scope :min_rating, ->(rating) {
-    joins(:user_skills).where("user_skills.rating >= ?", rating).distinct
+  scope :min_rating, lambda { |rating|
+    joins(:user_skills).where(user_skills: { rating: rating.. }).distinct
   }
 
-  scope :search_by_name, ->(keyword) {
-    where("name LIKE ?", "%#{keyword}%")
+  scope :search_by_name, lambda { |keyword|
+    where('name LIKE ?', "%#{keyword}%")
   }
 
   private

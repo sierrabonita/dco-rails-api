@@ -2,16 +2,16 @@
 
 class UserSkillsController < ApplicationController
   before_action :set_user
-  before_action :set_user_skill, only: [:show, :update, :destroy]
-  before_action :authorize_user!, only: [:create, :update, :destroy]
+  before_action :set_user_skill, only: %i[show update destroy]
+  before_action :authorize_user!, only: %i[create update destroy]
 
   def index
     custom_limit = params[:limit] || 10
     @pagy, user_skills = pagy(@user.user_skills.includes(:skill), limit: custom_limit)
     render(json: {
-      data: UserSkillResource.new(user_skills).serializable_hash,
-      meta: @pagy.data_hash,
-    })
+             data: UserSkillResource.new(user_skills).serializable_hash,
+             meta: @pagy.data_hash
+           })
   end
 
   def show
@@ -61,6 +61,6 @@ class UserSkillsController < ApplicationController
   end
 
   def authorize_user!
-    render(json: { error: "権限がありません" }, status: :forbidden) unless @current_user == @user
+    render(json: { error: '権限がありません' }, status: :forbidden) unless @current_user == @user
   end
 end

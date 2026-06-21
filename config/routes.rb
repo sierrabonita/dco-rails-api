@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  post "auth/login", to: "auth#login"
-  post "auth/refresh", to: "auth#refresh"
-  delete "auth/logout", to: "auth#logout"
+  post 'auth/login', to: 'auth#login'
+  post 'auth/refresh', to: 'auth#refresh'
+  delete 'auth/logout', to: 'auth#logout'
 
   resources :skills
   resources :users do
-    resources :skills, controller: "user_skills"
+    resources :skills, controller: 'user_skills'
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up", to: "rails/health#show", as: :rails_health_check
+  get 'up', to: 'rails/health#show', as: :rails_health_check
 
   # Defines the root path route ("/")
   # root "posts#index"

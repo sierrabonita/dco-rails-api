@@ -4,4 +4,4 @@
 Pagy::OPTIONS[:limit] = 20
 
 # JSONレスポンスのメタデータに含める項目を指定
-Pagy::OPTIONS[:metadata] = [:count, :page, :limit, :pages, :next, :prev]
+Pagy::OPTIONS[:metadata] = %i[count page limit pages next prev]
