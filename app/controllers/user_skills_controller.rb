@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# ユーザーとスキル情報の紐付け（UserSkill）の管理とCRUD処理を行うコントローラ
 class UserSkillsController < ApplicationController
   before_action :set_user
   before_action :set_user_skill, only: %i[show update destroy]
@@ -19,19 +20,12 @@ class UserSkillsController < ApplicationController
   end
 
   def create
-    # スキル名で既存のマスターデータを検索、なければ新規作成
-    @skill = Skill.find_or_initialize_by(name: user_skill_params[:name])
-    @skill.layer = user_skill_params[:layer] if @skill.new_record?
+    ActiveRecord::Base.transaction do
+      @skill = find_or_create_skill!
+      @user_skill = create_or_update_user_skill!(@skill)
+    end
 
-    @skill.save!
-
-    # 中間テーブルのレコードを作成・更新
-    @user_skill = @user.user_skills.find_or_initialize_by(skill: @skill)
-    @user_skill.rating = user_skill_params[:rating]
-    @user_skill.description = user_skill_params[:description]
-
-    @user_skill.save!
-    render(json: UserSkillResource.new(@user_skill).serialize, status: :created)
+    render json: UserSkillResource.new(@user_skill).serialize, status: :created
   end
 
   def update
@@ -62,5 +56,20 @@ class UserSkillsController < ApplicationController
 
   def authorize_user!
     render(json: { error: '権限がありません' }, status: :forbidden) unless @current_user == @user
+  end
+
+  def find_or_create_skill!
+    Skill.find_or_initialize_by(name: user_skill_params[:name]).tap do |skill|
+      skill.layer = user_skill_params[:layer] if skill.new_record?
+      skill.save!
+    end
+  end
+
+  def create_or_update_user_skill!(skill)
+    @user.user_skills.find_or_initialize_by(skill: skill).tap do |user_skill|
+      user_skill.rating = user_skill_params[:rating]
+      user_skill.description = user_skill_params[:description]
+      user_skill.save!
+    end
   end
 end
