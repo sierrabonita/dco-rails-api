@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# ユーザー情報（名前、メールアドレスなど）の管理、検索、およびCRUD処理を行うコントローラ
 class UsersController < ApplicationController
   skip_before_action :authenticate_request, only: [:create]
   before_action :require_admin, only: %i[create destroy]
@@ -7,14 +8,7 @@ class UsersController < ApplicationController
   before_action :authorize_user!, only: %i[update destroy]
 
   def index
-    users_query = User.includes(user_skills: :skill)
-
-    users_query = users_query.by_skills(params[:skill_ids]) if params[:skill_ids].present?
-
-    users_query = users_query.min_rating(params[:min_rating]) if params[:min_rating].present?
-
-    users_query = users_query.search_by_name(params[:keyword]) if params[:keyword].present?
-
+    users_query = filter_users(User.includes(user_skills: :skill))
     @pagy, @users = pagy(users_query)
 
     render(json: {
@@ -55,5 +49,17 @@ class UsersController < ApplicationController
 
   def authorize_user!
     render(json: { error: '権限がありません' }, status: :forbidden) unless @current_user == @user
+  end
+
+  def filter_users(query)
+    filters = {
+      skill_ids: :by_skills,
+      min_rating: :min_rating,
+      keyword: :search_by_name
+    }
+
+    filters.reduce(query) do |q, (param_key, scope_name)|
+      params[param_key].present? ? q.public_send(scope_name, params[param_key]) : q
+    end
   end
 end
