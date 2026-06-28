@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# スキル情報（名前、レイヤー、レーティング、説明など）の管理とCRUD処理を行うコントローラ
 class SkillsController < ApplicationController
   before_action :set_skill, only: %i[show update destroy]
   before_action :require_admin, only: %i[create update destroy]
