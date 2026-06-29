@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_06_20_014221) do
+ActiveRecord::Schema[7.2].define(version: 2026_06_29_012841) do
   create_table "skills", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "layer"
@@ -42,6 +42,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_20_014221) do
     t.string "uid"
     t.string "refresh_token"
     t.string "role", default: "normal", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["refresh_token"], name: "index_users_on_refresh_token"
   end
 

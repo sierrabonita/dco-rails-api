@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# ユーザー情報を管理し、認証やスキルの関連付けを行うモデル
 class User < ApplicationRecord
   has_secure_password
   has_many :user_skills, dependent: :destroy
