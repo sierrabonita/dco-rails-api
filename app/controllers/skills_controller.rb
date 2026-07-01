@@ -7,11 +7,16 @@ class SkillsController < ApplicationController
 
   # GET /skills
   def index
-    @pagy, @skills = pagy(Skill.all)
+    @skills = Skill.order(:name)
+
+    if params[:exclude_user_id].present?
+      # ユーザーがすでに登録している user_skills の skill_id 一覧を取得
+      registered_skill_ids = UserSkill.where(user_id: params[:exclude_user_id]).pluck(:skill_id)
+      @skills = @skills.where.not(id: registered_skill_ids)
+    end
 
     render(json: {
-             data: SkillResource.new(@skills).serializable_hash,
-             meta: @pagy.data_hash
+             data: SkillResource.new(@skills).serializable_hash
            })
   end
 
